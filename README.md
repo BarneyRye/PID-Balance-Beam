@@ -25,72 +25,131 @@
 
 
 ## Force equations:
-$$ F_{thrust} ∝ \omega^2 $$ 
-$$ \omega ∝ V $$
-$$ \therefore F_{thrust} ∝ V^2 = kV^2 $$
+```math
+F_{thrust} ∝ \omega^2
+```
+```math
+\omega ∝ V
+```
+```math
+\therefore F_{thrust} ∝ V^2 = kV^2
+```
 
 We want to convert the thrust to angular acceleration using:
-$$ T = F_{Perpendicular}x  $$
-$$ \alpha =  T / I $$ 
+```math
+T = F_{Perpendicular}x
+```
+```math
+\alpha = T / I
+```
 However, we must account for mass of the motor and propeller only
-$$ F_{Weight} = mg $$
+```math
+F_{Weight} = mg
+```
 To get the perpendicualr force we must use
-$$ F_{Perpendiclar} = |F_{Weight}cos(\theta)| $$
-Where theta is the angle to the horizontal, anbd the forcxe allways acts downwards
-$$ I = mx^2 $$
+```math
+F_{Perpendiclar} = |F_{Weight}cos(\theta)|
+```
+Where theta is the angle to the horizontal, anbd the force always acts downwards
+```math
+I = mx^2
+```
 
 ## Finally we get:
-$$ F_{Total} = F_{Thrust} - F_{Weight}cos(\theta) $$
-$$ \alpha = F_{Total}x/I$$
+```math
+F_{Total} = F_{Thrust} - F_{Weight}cos(\theta)
+```
+```math
+\alpha = F_{Total}x/I
+```
 
 ## But we want the angle:
 So integrating twice with respect time(t) we get:
-$$ \theta = at^2 + bt + c $$
+```math
+\theta = at^2 + bt + c
+```
 Where a = Fx/2I, b is the initial velocity and c is the initial position. <br>
 If we assume its at rest, at the horizontal, we get:
-$$ \theta_0 = 0, \omega_0 = 0$$
-$$ \theta = (F_{Total}x/2I)t^2 $$
+```math
+\theta_0 = 0, \omega_0 = 0
+```
+```math
+\theta = (F_{Total}x/2I)t^2
+```
 
 Using small angle approximations:
-$$ cos(\theta) = 1$$
+```math
+cos(\theta) = 1
+```
 We end up with:
 ---
-$$ \theta = (kV^2 - mg)/(2mx) t^2 $$
+```math
+\theta = (kV^2 - mg)/(2mx) t^2
+```
 ---
 
 For control loops, we want it in terms of the input, V, giving <br>
 **Open Loop Relationship:**
-$$ V = \sqrt{(((2mx\theta)/t^2)+mg)/k} $$
+```math
+V = \sqrt{(((2mx\theta)/t^2)+mg)/k}
+```
 *N.B. The value k represents a constant depednding on the motor and propeller characteristics*
 
-# Open loops transfer function:
+# Open loop transfer function:
 Going back, if we incorperated everything before the integration, it would leave us with:
-$$ \ddot\theta = (kV^2 - mg)/mx $$
+```math
+\ddot\theta = (kV^2 - mg)/mx
+```
 Lineraising around a voltage that holds the bar horizontal ie:
-$$ kV_0^2 = mg $$
-$$ kV^2 = k(V_0 + dV)^2 = kV_0^2 + 2kV_0dV + kdv^2 $$
+```math
+kV_0^2 = mg
+```
+```math
+kV^2 = k(V_0 + dV)^2 = kV_0^2 + 2kV_0dV + kdv^2
+```
 It becomes, assuming dV is small:
-$$ \ddot\theta = 2kV_0dV/mx $$
+```math
+\ddot\theta = 2kV_0dV/mx
+```
 
 **Applying a laplace with the same 0 initial conditions we get:**
-$$ S^2\theta(s) = (2kV_0/mx) * dV(s) $$
+```math
+S^2\theta(s) = (2kV_0/mx) * dV(s)
+```
 
 ## Open loops transfer function is:
-$$ G(s) = \theta(s)/dv(s) = (2kV_0)/(mxs^2)$$
+```math
+G(s) = \theta(s)/dv(s) = (2kV_0)/(mxs^2)
+```
 Simplified:
-$$ G(s) = a/s^2  $$
-$$ a = 2kV_0/mx$$
+```math
+G(s) = a/s^2
+```
+```math
+a = 2kV_0/mx
+```
 Where a is a constant depending on the motor and propeller characteristics
 
 # Estimations for simulations
 As
-$$  kV_0^2 = mg $$
-$$ k = mg/V_0^2 $$
+```math
+kV_0^2 = mg
+```
+```math
+k = mg/V_0^2
+```
 Assuming m=100g, x = 20cm, and running on a 6v at 50% duty cycle give V_avg as 3v,
-$$ k = 0.982/3^2 = 0.109 $$
-$$ \therefore a = (2*0.109*3)/(0.1*0.2) = 32.7 rads/s^2/V $$
+```math
+k = 0.982/3^2 = 0.109
+```
+```math
+\therefore a = (2*0.109*3)/(0.1*0.2) = 32.7 rads/s^2/V
+```
 Giving:
-$$ G(s) = 32.7/s^2 $$
+```math
+G(s) = 32.7/s^2
+```
 
-Which has been modelled in the simulink file
+Which has been modelled in the simulink file <br>
+*N.B. Duty cycle chosen as it would supply half the rating for the motor, which are normally about 6V, realistically the duty cycle would have to be altered depending on the motor characteristics*
 
