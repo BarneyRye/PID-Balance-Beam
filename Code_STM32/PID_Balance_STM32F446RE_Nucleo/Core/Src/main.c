@@ -98,7 +98,7 @@ int main(void)
 
   /* USER CODE BEGIN Init */
   PIDController pid {
-    .refAngle = 0.0f,
+    .refAngle = 270.0f/2, // Midpoint
     .currentAngle = 0.0f,
     .Kp = 50.0f,
     .Ki = 0.1f,
